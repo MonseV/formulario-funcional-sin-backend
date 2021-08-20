@@ -11,7 +11,10 @@
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-  <form id="formulario" class="form" action="">
+  <!-- Formspree -> sirve como API pero como versión gratis tiene limite
+     donde se enviara y podremos consultar la información
+     nos envia un correo -->
+  <form id="formulario" class="form" action="https://formspree.io/f/mdoyppdj" method="POST">
     <label for="form-name">Nombre completo</label>
     <input id="form-name" name="name" required type="text" placeholder="Juan">
     <label for="form-email">Correo electrónico</label>
@@ -20,30 +23,43 @@
     <textarea id="form-message" name="message" required cols="30" rows="10" placeholder="Mensaje"></textarea>
     <button class="button" type="submit">Enviar Mensaje</button>
   </form>
-  <!-- correo donde se enviara la información del formulario -->
-  <a href="mailto:monse.ame@gmail.com" id="trucazojs"></a>
+
   <script>
     const $form = document.querySelector('#formulario');
-    const $buttonMailto = document.querySelector('#trucazojs')
 
     $form.addEventListener('submit', handleSubmit)
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) { // devuelve una promesa
       event.preventDefault(); /* en este caso cancelamos la recarga de la página
                                  y así el código se seguira ejecutando
                               */
       const form = new FormData(this); /* ayuda a almacenar y enviar información de formularios de la manera más fácil
                                           enviamos el $form de html */
-      /* console.log(form.get('name')); */
-      $buttonMailto.setAttribute('href',
-                                  `mailto:monse.ame@gmail.com
-                                  ?subject=Nombre: ${form.get('name')} Correo: ${form.get('email')}
-                                  &body=${form.get('message')}
-                                `)
-      $buttonMailto.click()
-      $form.reset(); // limpia los input del formulario
-    }
+      // espera la respuesta y lo almacena
+      const response = await fetch(this.action, { /* await -> pausa la ejecución de la función asíncrona,
+                                                              espera la resolución de la Promise pasada ,
+                                                              reanuda la ejecución de la función async
+                                                              y devuelve el valor resuelto.
+                                                  */
+        method: this.method,
+        body: form,
+        headers: {
+          /* Tipo de Medio (Multipurpose Internet Mail Extensions or MIME type)
+             https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+          */
+          'Accept': 'application/json'
+        }
+      })
 
+      if (response.ok) { /* si response == 200, ok -> verdadero o falso */
+        this.reset() // limpia los input del formulario, es igual a $form.reset();
+        alert('Gracias por contactarme, te esccrbiré pronto :)');
+      }
+    }
   </script>
+
+
+
+
 </body>
 </html>
