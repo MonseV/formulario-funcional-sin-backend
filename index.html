@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario Funcional Sin Backend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"> <!-- 400;700 es el peso de la fuente -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <form id="formulario" class="form" action="">
+    <label for="form-name">Nombre completo</label>
+    <input id="form-name" name="name" required type="text" placeholder="Juan">
+    <label for="form-email">Correo electrónico</label>
+    <input id="form-email" name="email" required type="email" placeholder="juan@gmail.com">
+    <label for="form-message">Mensaje</label>
+    <textarea id="form-message" name="message" required cols="30" rows="10" placeholder="Mensaje"></textarea>
+    <button class="button" type="submit">Enviar Mensaje</button>
+  </form>
+  <!-- correo donde se enviara la información del formulario -->
+  <a href="mailto:monse.ame@gmail.com" id="trucazojs"></a>
+  <script>
+    const $form = document.querySelector('#formulario');
+    const $buttonMailto = document.querySelector('#trucazojs')
+
+    $form.addEventListener('submit', handleSubmit)
+
+    function handleSubmit(event) {
+      event.preventDefault(); /* en este caso cancelamos la recarga de la página
+                                 y así el código se seguira ejecutando
+                              */
+      const form = new FormData(this); /* ayuda a almacenar y enviar información de formularios de la manera más fácil
+                                          enviamos el $form de html */
+      /* console.log(form.get('name')); */
+      $buttonMailto.setAttribute('href',
+                                  `mailto:monse.ame@gmail.com
+                                  ?subject=Nombre: ${form.get('name')} Correo: ${form.get('email')}
+                                  &body=${form.get('message')}
+                                `)
+      $buttonMailto.click()
+      $form.reset(); // limpia los input del formulario
+    }
+
+  </script>
+</body>
+</html>

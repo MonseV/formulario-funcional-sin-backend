@@ -1,0 +1,61 @@
+/* FUENTE, TAMAÑO, COLORES */
+:root {
+  --fontBase: 'Poppins', sans-serif;
+  --body1: 16px/25.89px var(--fontBase);
+  --button: bold 14px/22.65px var(--fontBase);
+  --gradient: radial-gradient(41.48% 11.48% at 2.38% 8.52%, #747DE9 0%, rgba(255, 255, 255, 0) 100%), linear-gradient(135deg, #72EDF2 0%, #5151E5 100%);
+  --purple: #310A90;
+}
+
+body {
+  background: var(--gradient);
+}
+
+
+/* FORMULARIO */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form label {
+  font: var(--body1);
+  font-weight: 700;
+}
+
+.form input, .form textarea {
+  font: var(--body1);
+  border: 2px solid #858C94;
+  border-radius: 8px;
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+  padding-block-start: 12px;
+  padding-block-end: 12px;
+}
+
+
+/* BOTON */
+.button {
+  background: var(--purple);
+  color: white;
+  font: var(--button);
+  padding-inline-start: 24px;
+  padding-inline-end: 24px;
+  padding-block-start: 13px;
+  padding-block-end: 13px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  border: none;
+  text-decoration: none;
+  text-align: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+/* ANCLA DEL CORREO DONDE SE ENVIARA LA INFORMACION */
+#trucazojs {
+  opacity: 0;
+}
